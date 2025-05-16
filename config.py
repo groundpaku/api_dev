@@ -16,7 +16,7 @@ class Config:
     # ログバックアップ保持数
     LOGBACKUPCOUNT = 10
     # DB(MySQL) URL
-    DBURL = "postgresql://10.255.254.23:5432/suma2db_d_shinsei?user=suma2_user01&password=PCN6DhiY" 
+    DBURL = "postgresql://172.20.63.23:5432/chat_tto?user=chat_user01&password=Chat"
     SQLALCHEMY_DATABASE_URI = DBURL
     # API待受アドレス
     SERVER_ADDR = "0.0.0.0"
