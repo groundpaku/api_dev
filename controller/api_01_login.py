@@ -1,9 +1,6 @@
 #! /usr/bin/python3
 # coding: utf-8
 
-import os
-import datetime
-
 from models.database import db
 from models.model import M010User
 
@@ -42,12 +39,15 @@ class Api01Login(Resource):
                 
                 response = jsonify(dict_user)
                 response.status_code = 201
+                self.logger.info(SYSTEM_ID + " true.")
                 return response
             else:
                 self.logger.info("User does not exist. [name:" + str(dict_login_user["name"]) + "]")
+                self.logger.info(SYSTEM_ID + " false.")
                 return "User does not exist.", 200
         except Exception as e:
             self.logger.error(e)
+            self.logger.info(SYSTEM_ID + " false.")
             return str(e)
     
         
