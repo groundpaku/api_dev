@@ -4,9 +4,6 @@
 import os
 import datetime
 
-# from config import config
-# from constants import Constants
-
 from models.database import db
 from models.model import M010User
 
@@ -27,21 +24,12 @@ class Api01Login(Resource):
     
     def __init__(self):
         self.logger = current_app.logger
-        # self.config = config[os.getenv("FLASK_CONFIG") or "default"]
 
     def post(self):
         self.logger.info(SYSTEM_ID + " start.")
         dict_login_user = request.get_json()
         
         try:
-            # # DB接続
-            # engine = create_engine(
-            #        f"postgresql://chat_user01:Chat@172.20.63.23/chat_tto"
-            # )
-            # # セッション作成
-            # factory = sessionmaker(bind=engine)
-            # session = factory()
-
             # データ検索
             instance = session.query(M010User).filter(M010User.name == dict_login_user["name"]).first()
             if instance is not None:
@@ -51,7 +39,7 @@ class Api01Login(Resource):
                              "address": instance.address,
                              "deptcode": instance.deptcode}
                 self.logger.info("User is " + str(dict_user))
-                print(dict_user)
+                
                 response = jsonify(dict_user)
                 response.status_code = 201
                 return response
