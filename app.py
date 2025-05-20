@@ -6,7 +6,7 @@ from flask import Flask
 
 from config import Config
 from models.database import db, init_db
-from controller import api_01_login
+from controller import api_01_login, api_02_search_login_bonus, api_03_update_login_bonus
 
 sys.path.insert(1, os.path.abspath(os.path.dirname(__file__)))
 
@@ -29,6 +29,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app)
 
 app.register_blueprint(api_01_login.app, url_prefix="/api")
+app.register_blueprint(api_02_search_login_bonus.app, url_prefix="/api")
+app.register_blueprint(api_03_update_login_bonus.app, url_prefix="/api")
 
 if __name__ == "__main__":
     app.run(debug=Config.DEBUG, host=Config.SERVER_ADDR, port=Config.SERVER_PORT)

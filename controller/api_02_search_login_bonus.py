@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 # coding: utf-8
 
+import datetime
+
 from models.database import db
 from models.model import M010User, T010LoginBonus
 
@@ -36,8 +38,18 @@ class Api02SearchLoginBonus(Resource):
                              "login_point": instance.login_point,
                              "point_expiry_date": instance.point_expiry_date}
                 self.logger.info("User is " + str(dict_user))
+                # ログインボーナス取得対象者か判断
+                datetime_today = datetime.datetime.today()
+                datetime_diff = datetime_today - instance.last_login_date
+                str_login_bonus_flg = "0" # 0:非対象者 1:対象者
+                if datetime_diff.days > 1:
+                    str_login_bonus_flg = "1"
+
+                dict_result = {"result": True, "error_msg": "",
+                               "login_bonus_flg": str_login_bonus_flg,
+                               "user_info": dict_user}
                 
-                response = jsonify(dict_user)
+                response = jsonify(dict_result)
                 response.status_code = 201
                 self.logger.info(SYSTEM_ID + " true.")
                 return response

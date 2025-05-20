@@ -28,7 +28,7 @@ class Api01Login(Resource):
         
         try:
             # データ検索
-            instance = session.query(M010User).filter(M010User.name == dict_login_user["name"]).first()
+            instance = session.query(M010User).filter(M010User.id == dict_login_user["id"]).first()
             if instance is not None:
                 dict_user = {"id": instance.id,
                              "name": instance.name,
@@ -42,7 +42,7 @@ class Api01Login(Resource):
                 self.logger.info(SYSTEM_ID + " true.")
                 return response
             else:
-                self.logger.info("User does not exist. [name:" + str(dict_login_user["name"]) + "]")
+                self.logger.info("User does not exist. [id:" + str(dict_login_user["id"]) + "]")
                 self.logger.info(SYSTEM_ID + " false.")
                 return "User does not exist.", 200
         except Exception as e:
