@@ -45,6 +45,8 @@ class Api02SearchLoginBonus(Resource):
                 str_login_bonus_flg = "0" # 0:非対象者 1:対象者
                 if datetime_diff.days > 1:
                     str_login_bonus_flg = "1"
+                elif datetime_today.day != instance.last_login_date.day:
+                    str_login_bonus_flg = "1"
 
                 dict_result = {"result": True, "error_msg": "",
                                "login_bonus_flg": str_login_bonus_flg,
