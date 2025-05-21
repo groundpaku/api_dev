@@ -37,17 +37,20 @@ class Api03UpdateLoginBonus(Resource):
                 str_process_kbn = dict_login_user["process_kbn"]
                 if str_process_kbn == "0":
                     # 加算(ログインボーナス取得)
+                    self.logger.info("get login bonus")
                     instance.last_login_date = datetime_today
                     instance.login_count += 1
                     instance.login_point += 1
-                    instance.point_expiry_date += datetime_today + datetime.timedelta(days=365)
+                    instance.point_expiry_date = datetime_today + datetime.timedelta(days=365)
                 else:
                     # 除算(ログインボーナス使用)
+                    self.logger.info("use login bonus")
                     instance.login_count = 0
                     instance.login_point = 0
                     instance.point_expiry_date = None
 
-                response = jsonify({"result": True, "error_msg": ""})
+                session.commit()
+                response = jsonify({"result": True, "error_msg": "", "login_point": instance.login_point})
                 response.status_code = 201
                 self.logger.info(SYSTEM_ID + " true.")
                 return response

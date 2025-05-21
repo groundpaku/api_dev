@@ -41,6 +41,7 @@ class Api02SearchLoginBonus(Resource):
                 # ログインボーナス取得対象者か判断
                 datetime_today = datetime.datetime.today()
                 datetime_diff = datetime_today - instance.last_login_date
+                self.logger.info(datetime_diff)
                 str_login_bonus_flg = "0" # 0:非対象者 1:対象者
                 if datetime_diff.days > 1:
                     str_login_bonus_flg = "1"
@@ -48,7 +49,7 @@ class Api02SearchLoginBonus(Resource):
                 dict_result = {"result": True, "error_msg": "",
                                "login_bonus_flg": str_login_bonus_flg,
                                "user_info": dict_user}
-                
+                self.logger.info(dict_result)
                 response = jsonify(dict_result)
                 response.status_code = 201
                 self.logger.info(SYSTEM_ID + " true.")
